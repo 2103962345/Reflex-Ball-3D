@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
     float sec = 0;
     float obstimer = 0;
     public float checkTimerforObstacle;
-
+    float timerStart = 1;
     // UI Elements 
     [Header("UI Elements")]
     public Text scoreText;
@@ -47,7 +47,6 @@ public class GameController : MonoBehaviour
     // Start function
     private void Start()
     {
-        // InvokeRepeating("bigObstacleSpawn", 5, 5);
         InvokeRepeating("difficulty", 0, 30);
         InvokeRepeating("scoreCounter", 0, 0.02f);
     }
@@ -57,7 +56,12 @@ public class GameController : MonoBehaviour
     {
 
         // Timer function called
-        Timer();
+        if (Time.time >= timerStart)
+        {
+            Timer();
+            timerStart = Time.time + 1f;
+        }
+        
 
         // Obstacle's timer starting
         if (MoveController.gameStarted)
@@ -121,7 +125,6 @@ public class GameController : MonoBehaviour
                 sec = 0;
             }
         }
-
     }
 
     // controlling SpawnController with timer
@@ -194,13 +197,11 @@ public class GameController : MonoBehaviour
         {
             Invoke("bigobstaclesbackbool", 0.25f);
             suggestPanel.SetActive(true);
-            GameObject bigObs = Instantiate(bigObstacle[UnityEngine.Random.Range(0, bigObstacle.Length)]);
-            bigObs.transform.position = new Vector3(0, 0f, ball.position.z + obsPosition);
-            string sug = bigObs.GetComponent<bigObstaclesController>().suggest;
-            suggestText.text = sug;
+            int random = UnityEngine.Random.Range(0, bigObstacle.Length);
+            bigObstacle[random].SetActive(true);
+            bigObstacle[random].transform.position = new Vector3(0, 0f, ball.position.z + obsPosition);
+            suggestText.text = bigObstacle[random].GetComponent<bigObstaclesController>().suggest;
             bigObstacleBool = true;
-            Destroy(bigObs, destroyTime);
-            
         }
     }
 

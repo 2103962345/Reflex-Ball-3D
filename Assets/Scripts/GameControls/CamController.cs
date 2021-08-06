@@ -14,6 +14,6 @@ public class CamController : MonoBehaviour
     
     private void Update()
     {
-        transform.position = new Vector3(transform.position.x, camY, targetBall.position.z - distance);
+            transform.position = new Vector3(transform.position.x, camY, targetBall.position.z - distance);
     }
 }

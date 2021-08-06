@@ -10,7 +10,9 @@ public class PlayGames : MonoBehaviour
     public Text playerScore;
     string leaderboardID = "CgkI4JqPuqocEAIQAQ";
     string achievementID = "CgkI4JqPuqocEAIQAA";
-    public static PlayGamesPlatform platform;
+    private static PlayGamesPlatform platform;
+
+    
 
     void Start()
     {
@@ -34,6 +36,11 @@ public class PlayGames : MonoBehaviour
             }
         });
         UnlockAchievement();
+    }
+
+    public void Rate()
+    {
+        Application.OpenURL("market://details?id=com.KarakokGames.ReflectionBall3D");
     }
 
     public void AddScoreToLeaderboard()

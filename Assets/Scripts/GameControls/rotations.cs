@@ -6,8 +6,15 @@ public class rotations : MonoBehaviour
 {
   
     public Vector3 rotation;
+    float start = 0;
+
     private void Update() {
-        gameObject.transform.Rotate(rotation );
+        if (Time.time >= start)
+        {
+            gameObject.transform.Rotate(rotation);
+            start = Time.time + .1f;
+        }
+        
     }
    
 }

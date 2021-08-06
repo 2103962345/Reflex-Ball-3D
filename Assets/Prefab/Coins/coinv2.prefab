@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669154ee287508f45993d1fe15746281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotation: {x: 0, y: 0.5, z: 0}
+  rotation: {x: 0, y: 2, z: 0}
 --- !u!65 &117851984536550648
 BoxCollider:
   m_ObjectHideFlags: 0

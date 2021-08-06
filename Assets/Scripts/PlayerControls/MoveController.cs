@@ -47,7 +47,7 @@ public class MoveController : MonoBehaviour
             if (controller.isGrounded)
             {
                 gravity = -30;
-                if (SwipeManager.swipeUp || Input.GetKeyDown(KeyCode.UpArrow))
+                if (SwipeManager.swipeUp)
                 {
                     // Jump function called
                     adSource.PlayOneShot(movement);
@@ -56,14 +56,14 @@ public class MoveController : MonoBehaviour
             }
             else
             {
-                if (SwipeManager.swipeDown || Input.GetKeyDown(KeyCode.DownArrow))
+                if (SwipeManager.swipeDown)
                 {
                     gravity += -200;
                 }
             }
 
             //  Change lane controller
-            if (SwipeManager.swipeRight || Input.GetKeyDown(KeyCode.RightArrow))
+            if (SwipeManager.swipeRight)
             {
                 adSource.PlayOneShot(movement);
                 currentLane++;
@@ -72,7 +72,7 @@ public class MoveController : MonoBehaviour
                     currentLane = 2;
                 }
             }
-            if (SwipeManager.swipeLeft | Input.GetKeyDown(KeyCode.LeftArrow))
+            if (SwipeManager.swipeLeft)
             {
                 adSource.PlayOneShot(movement);
                 currentLane--;

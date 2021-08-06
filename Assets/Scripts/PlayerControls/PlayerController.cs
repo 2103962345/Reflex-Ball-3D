@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    // Road definiton
+    float newPosition = 300;
     // Coin UI definition
     int inLevelCoin = 0;
     int totalCoin;
     public Text coinCounter;
     public Text totalcoinText;
     public static bool gameOver = false;
+    float checkTotalCoin = 0;
 
     // Fat Level UI Elements 
     public GameObject[] fatLevelImages;
@@ -43,13 +46,24 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        totalCoin = PlayerPrefs.GetInt("totalcoin");
-        totalcoinText.text = " X " + "\n" + totalCoin.ToString();
+        if (Time.time >= checkTotalCoin)
+        {
+            totalCoin = PlayerPrefs.GetInt("totalcoin");
+            totalcoinText.text = " X " + "\n" + totalCoin.ToString();
+            checkTotalCoin = Time.time + 1; 
+        }
+        
     }
     
     // We checking collision
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+
+        if (hit.gameObject.CompareTag("road"))
+        {
+            hit.transform.parent.transform.position += new Vector3(0, 0, newPosition);
+        }
+
         // checking tag control and writing function
         if (hit.gameObject.CompareTag("coin"))
         {
