@@ -4,6 +4,7 @@ using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
 
+
 public class adManager : MonoBehaviour
 {
     private InterstitialAd ads;
@@ -41,6 +42,7 @@ public class adManager : MonoBehaviour
         if (ads.IsLoaded())
         {
             ads.Show();
+            
         }
         else
         {
@@ -72,4 +74,27 @@ public class adManager : MonoBehaviour
 
     }
 
+    public void writeExternalStorageResponse(int result)
+    {
+        if (result == 0)
+        {
+            Debug.Log("WRITE_EXTERNAL_STORAGE permission granted");
+        }
+        else
+        {
+            Debug.Log("WRITE_EXTERNAL_STORAGE permission grant refused");
+        }
+    }
+
+    public void accessCoarseLocationResponse(int result)
+    {
+        if (result == 0)
+        {
+            Debug.Log("ACCESS_COARSE_LOCATION permission granted");
+        }
+        else
+        {
+            Debug.Log("ACCESS_COARSE_LOCATION permission grant refused");
+        }
+    }
 }

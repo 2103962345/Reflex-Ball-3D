@@ -33,10 +33,12 @@ public class MoveController : MonoBehaviour
 
     private void Update()
     {
+        
         //Check game started
         if (gameStarted)
         {
             // Forward Move and Gravity
+           
             direction.z = forwardSpeed;
             direction.y += gravity * Time.deltaTime;
 
@@ -47,7 +49,7 @@ public class MoveController : MonoBehaviour
             if (controller.isGrounded)
             {
                 gravity = -30;
-                if (SwipeManager.swipeUp)
+                if (SwipeManager.swipeUp || Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     // Jump function called
                     adSource.PlayOneShot(movement);
@@ -56,14 +58,14 @@ public class MoveController : MonoBehaviour
             }
             else
             {
-                if (SwipeManager.swipeDown)
+                if (SwipeManager.swipeDown || Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     gravity += -200;
                 }
             }
 
             //  Change lane controller
-            if (SwipeManager.swipeRight)
+            if (SwipeManager.swipeRight || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 adSource.PlayOneShot(movement);
                 currentLane++;
@@ -72,7 +74,7 @@ public class MoveController : MonoBehaviour
                     currentLane = 2;
                 }
             }
-            if (SwipeManager.swipeLeft)
+            if (SwipeManager.swipeLeft || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 adSource.PlayOneShot(movement);
                 currentLane--;

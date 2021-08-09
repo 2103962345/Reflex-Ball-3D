@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class rotations : MonoBehaviour
 {
-  
-    public Vector3 rotation;
-    float start = 0;
+    Vector3 rotation = new Vector3(0,2,0);
 
-    private void Update() {
-        if (Time.time >= start)
-        {
-            gameObject.transform.Rotate(rotation);
-            start = Time.time + .1f;
-        }
-        
+    private void FixedUpdate()
+    {
+        gameObject.transform.Rotate(rotation);
     }
-   
+
 }

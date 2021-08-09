@@ -14,14 +14,10 @@ public class GameController : MonoBehaviour
 
     // Obstacle Prefab & Position Definition
     [Header("Obstacle System")]
-    public GameObject[] obstacles;
+    public List<GameObject> obstacles;
+    public List<GameObject> activeObstacles;
     public Transform ball;
-    float left = -2f;
-    float mid = 0;
-    float right = 2;
-    int obscount = 1;
     public int obsPosition;
-    public float destroyTime;
     int totalobs=0;
 
     // Timer & Score Definition
@@ -30,6 +26,7 @@ public class GameController : MonoBehaviour
     float obstimer = 0;
     public float checkTimerforObstacle;
     float timerStart = 1;
+
     // UI Elements 
     [Header("UI Elements")]
     public Text scoreText;
@@ -105,10 +102,6 @@ public class GameController : MonoBehaviour
             score = (float)Math.Round(ball.transform.position.z);
             Math.Round(score);
             scoreText.text = score.ToString() + "m";
-            if (score > PlayerPrefs.GetFloat("highScore"))
-            {
-                PlayerPrefs.SetFloat("highScore", score);
-            }
         }
     }
 
@@ -134,60 +127,26 @@ public class GameController : MonoBehaviour
         {
             if (bigObstacleBool == false)
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    if (i == 0)
-                    {
-                        SpawnController(left);
-                    }
-                    if (i == 1)
-                    {
-
-                        SpawnController(mid);
-
-                    }
-                    if (i == 2)
-                    {
-                        SpawnController(right);
-
-                    }
-
-                }
-            }
-            obscount = 1;
+                Spawner();
+            } 
+           
         }
     }
 
-    // Random spawn and way controller
-    void SpawnController(float way)
+    void Spawner()
     {
-        int index = UnityEngine.Random.Range(0, 100);
-        // if index smaller than 50 we'll spawn coin
-        if (index < 30)
-        {
-            GameObject new_object = Instantiate(obstacles[0]);
-            new_object.transform.position = new Vector3(way, 0.5f, ball.position.z + obsPosition);
-            Destroy(new_object, destroyTime);
-        }
-        else
-        {
-            // if obscount smaller than 3, we will spawn obstacle
-            if (obscount < 3)
-            {
-                int obs = UnityEngine.Random.Range(1, obstacles.Length);
-                GameObject new_object = Instantiate(obstacles[obs]);
-                new_object.transform.position = new Vector3(way, 0.5f, ball.position.z + obsPosition);
-                Destroy(new_object, destroyTime);
-                obscount++;
-            }
-            // if have been 2 obstacle we will spawn again coin, -1 or +1
-            else
-            {
-                GameObject new_object = Instantiate(obstacles[0]);
-                new_object.transform.position = new Vector3(way, 0.5f, ball.position.z + obsPosition);
-                Destroy(new_object, destroyTime);
-            }
-        }
+        int randomObstacle = UnityEngine.Random.Range(0, obstacles.Count);
+        obstacles[randomObstacle].SetActive(true);
+        obstacles[randomObstacle].transform.position = new Vector3(0, 0, ball.position.z + obsPosition);
+        activeObstacles.Add(obstacles[randomObstacle]);
+        obstacles.RemoveAt(randomObstacle);
+        Invoke("RefreshList", 2);
+    }
+    
+    void RefreshList()
+    {
+        obstacles.Add(activeObstacles[0]);
+        activeObstacles.RemoveAt(0);
     }
 
     // Big obstacle spawn function

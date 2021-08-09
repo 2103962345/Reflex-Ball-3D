@@ -18,6 +18,7 @@ public class shopController : MonoBehaviour
     public AudioSource adSource;
     public AudioClip click;
     public AudioClip equipClip;
+   
 
     private void Start()
     {
@@ -34,10 +35,7 @@ public class shopController : MonoBehaviour
                
             }
         }
-
-        
         checkModel();
-       
     }
     
     public void checkModel()
@@ -48,18 +46,12 @@ public class shopController : MonoBehaviour
             ball.SetActive(false);
             ballModels[currentBall].SetActive(true);
         }
-    }
-
-    private void Update()
-    {
-       // checkModel();
         updateUI();
-        counter.text = currentBall+1 + " / " + ballModels.Length;
-        coins.text = PlayerPrefs.GetInt("totalcoin").ToString();
     }
 
     public void equipmodel()
     {
+        
         adSource.PlayOneShot(equipClip);
         equipButton.GetComponentInChildren<Text>().text = "EQUIPED";
         ballsModels ball = balls[currentBall];
@@ -68,10 +60,12 @@ public class shopController : MonoBehaviour
             return;
         }
         PlayerPrefs.SetInt("currentBall", currentBall);
+        updateUI();
     }
 
     public void nextModel()
     {
+        
         equipButton.GetComponentInChildren<Text>().text = "EQUIP";
         adSource.PlayOneShot(click);
         ballModels[currentBall].SetActive(false);
@@ -81,6 +75,7 @@ public class shopController : MonoBehaviour
             currentBall = 0;
         }
         ballModels[currentBall].SetActive(true);
+        updateUI();
     }
 
     public void backModel()
@@ -94,6 +89,7 @@ public class shopController : MonoBehaviour
             currentBall = ballModels.Length - 1 ;
         }
         ballModels[currentBall].SetActive(true);
+        updateUI();
     }
 
     public void unlockModel()
@@ -104,6 +100,7 @@ public class shopController : MonoBehaviour
         PlayerPrefs.SetInt("currentBall", currentBall);
         ball.isPurchased = true;
         PlayerPrefs.SetInt("totalcoin", PlayerPrefs.GetInt("totalcoin", 0) - ball.price);
+        updateUI();
     }
 
     private void updateUI()
@@ -129,6 +126,7 @@ public class shopController : MonoBehaviour
                 buyButton.interactable = false;
             }
         }
-       
+        counter.text = currentBall + 1 + " / " + ballModels.Length;
+        coins.text = PlayerPrefs.GetInt("totalcoin").ToString();
     }
 }

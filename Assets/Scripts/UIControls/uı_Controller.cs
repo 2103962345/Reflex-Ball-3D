@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class uı_Controller : MonoBehaviour
 {
     // Start Screen UI Elements
     [Header("Start Button")]
     public GameObject mainScreen;
-    
+
     // Topbar UI elements 
     [Header("Topbar")]
     public GameObject topbar;
@@ -26,33 +27,23 @@ public class uı_Controller : MonoBehaviour
     public GameObject shopPanel;
     public GameObject podium;
     public shopController sc;
-
+    public PlayerController pc;
 
     // auido controller
     public AudioSource adSource;
     public AudioClip click;
-    
+
     private void Awake()
     {
         // we will close the topbar when the game starts
         topbar.SetActive(false);
-       
     }
 
-    private void Start() {
-       mainHighScore.text = PlayerPrefs.GetFloat("highScore").ToString();
-    }
-
-    private void Update()
+    private void Start()
     {
-
-        // Checking game over happens if player controller bool game over we will stop the game and show game over panel
-        if (PlayerController.gameOver == true)
-        {
-            gameOver();
-        }
+        mainHighScore.text = PlayerPrefs.GetFloat("highScore").ToString();
     }
-   
+
     // Start button function
     public void tapToStart()
     {
@@ -75,6 +66,7 @@ public class uı_Controller : MonoBehaviour
 
     public void shopBack()
     {
+        pc.MainScreenCoinControl();
         sc.checkModel();
         adSource.PlayOneShot(click);
         podium.SetActive(false);
@@ -91,13 +83,16 @@ public class uı_Controller : MonoBehaviour
     }
 
     // GameOver Function
-    public void gameOver()
+    public void gameOver(bool go)
     {
         // stop time and score writing textbox
-        topbar.SetActive(false);
-        gameOverPanel.SetActive(true);
-        score.text = GameController.score.ToString();
-        bestScore.text = PlayerPrefs.GetFloat("highScore").ToString();
+        if (go)
+        {
+            topbar.SetActive(false);
+            gameOverPanel.SetActive(true);
+            score.text = GameController.score.ToString();
+            bestScore.text = PlayerPrefs.GetFloat("highScore").ToString();
+        }
     }
 
     // Quit function
@@ -107,5 +102,5 @@ public class uı_Controller : MonoBehaviour
         Application.Quit();
     }
 
-    
+
 }

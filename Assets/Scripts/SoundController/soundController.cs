@@ -8,7 +8,7 @@ public class soundController : MonoBehaviour
     bool muted = false;
     public Image onvoice;
     public Image offvoice;
-    float startTime = 0;
+    
 
     private void Start()
     {
@@ -23,15 +23,7 @@ public class soundController : MonoBehaviour
         updateIcon();
         AudioListener.pause = muted;
     }
-    private void Update()
-    {
-        if (Time.time >= startTime)
-        {
-            updateIcon();
-            startTime = Time.time + 2;
-        }
-       
-    }
+    
     private void updateIcon()
     {
         if (muted == false)
@@ -59,6 +51,7 @@ public class soundController : MonoBehaviour
             AudioListener.pause = false;
         }
         saveSettings();
+        updateIcon();
     }
     private void loadSettings()
     {
