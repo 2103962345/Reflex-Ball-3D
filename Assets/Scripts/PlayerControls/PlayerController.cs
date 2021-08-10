@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    // Road definiton
-    float newPosition = 300;
-
+   
     // Coin UI definition
     int inLevelCoin = 0;
     int totalCoin;
@@ -55,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
         if (hit.gameObject.CompareTag("road"))
         {
-            hit.transform.parent.transform.position += new Vector3(0, 0, newPosition);
+            hit.transform.parent.transform.position += new Vector3(0, 0, 30);
         }
 
         // checking tag control and writing function

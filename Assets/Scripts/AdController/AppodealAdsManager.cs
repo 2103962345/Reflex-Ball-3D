@@ -12,7 +12,7 @@ public class AppodealAdsManager : MonoBehaviour, IRewardedVideoAdListener
 
     void Start()
     {
-        adsCounter = 0;
+        adsCounter = 1;
         Appodeal.disableLocationPermissionCheck();
         Appodeal.initialize(appKey, Appodeal.INTERSTITIAL);
         Appodeal.initialize(appKey, Appodeal.BANNER_BOTTOM);
@@ -32,6 +32,10 @@ public class AppodealAdsManager : MonoBehaviour, IRewardedVideoAdListener
             Appodeal.show(Appodeal.INTERSTITIAL);
             adsCounter++;
             Debug.Log("çalýþtý");
+        }
+        else
+        {
+            adsCounter++;
         }
        
     }
