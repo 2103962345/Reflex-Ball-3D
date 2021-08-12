@@ -8,11 +8,13 @@ using AppodealAds.Unity.Common;
 public class AppodealAdsManager : MonoBehaviour, IRewardedVideoAdListener
 {
     string appKey = "2b6090ec6337d24ff5acfdb4aa51ae7f00f85e9461604ef2";
-    int adsCounter;
+    public int adsCounter;
 
     void Start()
     {
-        adsCounter = 1;
+        adsCounter = PlayerPrefs.GetInt("adscounter");
+
+        
         Appodeal.disableLocationPermissionCheck();
         Appodeal.initialize(appKey, Appodeal.INTERSTITIAL);
         Appodeal.initialize(appKey, Appodeal.BANNER_BOTTOM);
@@ -22,23 +24,20 @@ public class AppodealAdsManager : MonoBehaviour, IRewardedVideoAdListener
         if (Appodeal.isLoaded(Appodeal.BANNER_BOTTOM))
         {
             Appodeal.show(Appodeal.BANNER_BOTTOM);
-            Debug.Log("çalýþtý banner reklam");
         }
     }
     public void adsShow()
     {
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL) && adsCounter %2 == 0)
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL))
         {
-            Appodeal.show(Appodeal.INTERSTITIAL);
-            adsCounter++;
-            Debug.Log("çalýþtý");
+            if (adsCounter % 2 == 0)
+            {
+                Appodeal.show(Appodeal.INTERSTITIAL);
+            }
+            
         }
-        else
-        {
-            adsCounter++;
-        }
-       
     }
+
     public void RewardedVideoShow()
     {
         if (Appodeal.isLoaded(Appodeal.REWARDED_VIDEO))

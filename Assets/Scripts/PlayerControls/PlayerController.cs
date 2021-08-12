@@ -71,6 +71,10 @@ public class PlayerController : MonoBehaviour
         }
         if (hit.gameObject.CompareTag("obstacle"))
         {
+            appodealAdsManager.adsCounter++;
+            
+            PlayerPrefs.SetInt("adscounter", appodealAdsManager.adsCounter);
+            Debug.Log(PlayerPrefs.GetInt("adscounter"));
             // game over panel calling and total coin setting for main menu 
             if (GameController.score > PlayerPrefs.GetFloat("highScore"))
             {
